@@ -31,24 +31,8 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Push image
-        run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}/${{ github.event.inputs.image_tag }}
+      - name: Build docker image
+        run: docker build --no-cache --build-arg BRANCH=${{ github.event.inputs.upstream_branch }} -t ghcr.io/vincywindy/hpoolchia:${{ github.event.inputs.image_tag }} .
 
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "main" ] && VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+      - name: Push to github packages
+        run: docker push ghcr.io/vincywindy/hpoolchia:${{ github.event.inputs.image_tag }}

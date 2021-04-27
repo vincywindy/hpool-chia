@@ -1,0 +1,1 @@
+hpool-miner-chia

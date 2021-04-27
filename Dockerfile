@@ -7,4 +7,5 @@ ADD ./chia-plotter-linux-amd64 chia-plotter-linux-amd64
 RUN chmod 777 chia-plotter-linux-amd64
 ADD ./ProofOfSpace ProofOfSpace
 RUN chmod 777 ProofOfSpace
-ENTRYPOINT ["/bin/sh", ""]
+ADD ./entrypoint.sh entrypoint.sh
+ENTRYPOINT ["bash", "./entrypoint.sh"]

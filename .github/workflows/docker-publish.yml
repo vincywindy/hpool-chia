@@ -12,7 +12,9 @@ on:
         description: ''
         required: true
         default: 'unstable'
-
+env:
+  # TODO: Change variable to your image's name.
+  IMAGE_NAME: hpoolchia
 jobs:
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/

@@ -13,9 +13,16 @@ on:
   # Run tests for any PRs.
   pull_request:
 
-env:
-  # TODO: Change variable to your image's name.
-  IMAGE_NAME: hpoolchia
+  workflow_dispatch:
+    inputs:
+      upstream_branch:
+        description: ''
+        required: true
+        default: 'dev'
+      image_tag:
+        description: ''
+        required: true
+        default: 'unstable'
 
 jobs:
   # Run tests.
@@ -55,7 +62,7 @@ jobs:
 
       - name: Push image
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=ghcr.io/${{ github.repository }}/${{ github.event.inputs.image_tag }}
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')

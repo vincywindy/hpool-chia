@@ -1,2 +1,1 @@
-cd /hpool
-hpool-miner-chia
+./hpool-miner-chia

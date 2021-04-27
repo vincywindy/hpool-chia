@@ -1,2 +1,2 @@
 cd /config
-hpool/hpool-miner-chia
+/hpool/hpool-miner-chia
